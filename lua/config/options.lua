@@ -17,5 +17,5 @@ opt.wrap = false
 -- Scrolloff
 opt.scrolloff = 6
 
--- Mouse off
-opt.mouse = ""
+-- Mouse
+opt.mouse = "a"

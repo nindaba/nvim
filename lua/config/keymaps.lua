@@ -10,3 +10,6 @@ map.set("i", "jk", "<ESC>", { desc = "Exit insert mode with jk" })
 map.set("n", "<leader>nl", ":nohl<CR>", { desc = "Clear search hightlights" })
 map.set("n", "\\", ":", { desc = "Toggle command mode" })
 map.set("n", "S", ":w<CR>", { desc = "Save buffer" })
+
+-- Git
+map.set("n", "<leader>gr", ":Gitsigns reset_hunk<CR>", { desc = "Revert hunk" })
