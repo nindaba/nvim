@@ -1,5 +1,6 @@
 return {
   "mfussenegger/nvim-dap",
+  "nvim-java/nvim-java-dap",
   optional = true,
   opts = function()
     -- Simple configuration to attach to remote java debug process

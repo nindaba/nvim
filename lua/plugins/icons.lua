@@ -37,7 +37,7 @@ return {
           },
           ["sh"] = {
             icon = "$",
-            color = "#2fd64b",
+            color = "#1E5F1E",
             name = "Sh",
           },
         },
