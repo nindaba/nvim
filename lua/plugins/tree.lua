@@ -236,7 +236,7 @@ return {
         exclude = {},
       },
       live_filter = {
-        prefix = "🔍 ",
+        prefix = "Filter: ",
         always_show_folders = true,
       },
       filesystem_watchers = {
