@@ -18,4 +18,4 @@ opt.wrap = false
 opt.scrolloff = 6
 
 -- Mouse
-opt.mouse = "a"
+opt.mouse = ""
