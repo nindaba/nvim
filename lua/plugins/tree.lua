@@ -205,12 +205,12 @@ return {
         cygwin_support = false,
       },
       diagnostics = {
-        enable = false,
+        enable = true,
         show_on_dirs = false,
         show_on_open_dirs = true,
         debounce_delay = 500,
         severity = {
-          min = vim.diagnostic.severity.HINT,
+          min = vim.diagnostic.severity.WARN,
           max = vim.diagnostic.severity.ERROR,
         },
         icons = {
@@ -221,7 +221,7 @@ return {
         },
       },
       modified = {
-        enable = false,
+        enable = true,
         show_on_dirs = true,
         show_on_open_dirs = true,
       },
