@@ -1,5 +1,5 @@
 return {
-  { "mfussenegger/nvim-jdtls", dependencies = "hrsh7th/cmp-nvim-lsp" },
+  { "mfussenegger/nvim-jdtls", ft = "java", dependencies = "hrsh7th/cmp-nvim-lsp" },
   {
     "rcasia/neotest-java",
     ft = "java",
