@@ -1,4 +1,30 @@
-return {}
+return {
+  { "mfussenegger/nvim-jdtls", dependencies = "hrsh7th/cmp-nvim-lsp" },
+  {
+    "rcasia/neotest-java",
+    ft = "java",
+    dependencies = {
+      "mfussenegger/nvim-jdtls",
+      "mfussenegger/nvim-dap", -- for the debugger
+      "rcarriga/nvim-dap-ui", -- recommended
+      "theHamsta/nvim-dap-virtual-text", -- recommended
+    },
+  },
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "antoinemadec/FixCursorHold.nvim",
+      "rcasia/neotest-java",
+    },
+    opts = {
+      adapters = {
+        ["neotest-java"] = {},
+      },
+    },
+  },
+}
 -- return {
 --   {
 --     "mfussenegger/nvim-jdtls",

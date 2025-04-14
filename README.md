@@ -1,4 +1,5 @@
-# 💤 LazyVim
+# Jet settup
 
-A starter template for [LazyVim](https://github.com/LazyVim/LazyVim).
-Refer to the [documentation](https://lazyvim.github.io/installation) to get started.
+## Java settup source
+
+[Here is there resource for the minimal java settup](https://eruizc.dev/blog/en/java-with-neovim/)

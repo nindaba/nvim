@@ -7,9 +7,6 @@ return {
     { "WhoIsSethDaniel/mason-tool-installer.nvim" },
     --TODO: nvim-notify replace
     { "j-hui/fidget.nvim", opts = {} },
-
-    -- https://github.com/folke/neodev.nvim
-    { "folke/neodev.nvim", opts = {} },
   },
   config = function()
     require("mason").setup()
@@ -29,13 +26,13 @@ return {
         "yamlls",
         "angularls",
         "denols",
-        "dartls",
       },
     })
     require("mason-tool-installer").setup({
       ensure_installed = {
         "java-debug-adapter",
         "java-test",
+        "google-java-format",
       },
     })
 
