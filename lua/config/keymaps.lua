@@ -25,7 +25,6 @@ map.set("n", "<leader>h", "<C-W><10", { desc = "Resize window height left" })
 map.set("n", "<leader>l", "<C-W>>10", { desc = "Resize window height right" })
 
 --LSP
-map.set("n", "gg", "<cmd>lua vim.lsp.buf.hover()<CR>")
 map.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
 map.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
 map.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
