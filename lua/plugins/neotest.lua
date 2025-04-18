@@ -12,7 +12,7 @@ return {
     local neotest = require("neotest")
     local map = vim.keymap
 
-    map.set("n", "<leader>tt", function()
+    map.set("n", "<leader>td", function()
       neotest.run.run({ strategy = "dap" })
     end, { desc = "Test Method in debug mode" })
 
