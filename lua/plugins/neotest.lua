@@ -42,7 +42,7 @@ return {
         severity = 1,
       },
       discovery = {
-        concurrent = 0,
+        concurrent = 1,
         enabled = true,
       },
       floating = {
@@ -94,7 +94,7 @@ return {
       log_level = 3,
       output = {
         enabled = true,
-        open_on_run = "short",
+        open_on_run = true,
       },
       output_panel = {
         enabled = true,
@@ -126,7 +126,7 @@ return {
         },
       },
       summary = {
-        animated = true,
+        animated = false,
         count = true,
         enabled = true,
         expand_errors = true,
@@ -155,7 +155,7 @@ return {
         open = "botright vsplit | vertical resize 50",
       },
       watch = {
-        enabled = true,
+        enabled = false,
         symbol_queries = {
           java = "        ;query\n        ;captures imported classes\n        (import_declaration\n            (scoped_identifier name: ((identifier) @symbol))\n        )\n      ",
           javascript = '  ;query\n  ;Captures named imports\n  (import_specifier name: (identifier) @symbol)\n  ;Captures default import\n  (import_clause (identifier) @symbol)\n  ;Capture require statements\n  (variable_declarator \n  name: (identifier) @symbol\n  value: (call_expression (identifier) @function  (#eq? @function "require")))\n  ;Capture namespace imports\n  (namespace_import (identifier) @symbol)\n',
