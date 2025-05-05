@@ -331,8 +331,9 @@ return {
 
     local map = vim.keymap
 
-    map.set("n", "<leader>e", ":NvimTreeFindFileToggle<CR>", { desc = "Toggle Explore tree" })
-    map.set("n", "j", "", { desc = "Explore open " })
+    map.set("n", "<leader>e", function()
+      vim.cmd("NvimTreeFindFileToggle")
+    end, { desc = "Toggle Explore tree" })
 
     vim.cmd([[
         :hi      NvimTreeExecFile    guifg=#ffa0a0

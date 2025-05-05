@@ -19,3 +19,5 @@ opt.scrolloff = 6
 
 -- Mouse
 opt.mouse = ""
+
+vim.g.lazyvim_picker = "snacks"

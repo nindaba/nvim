@@ -5,38 +5,53 @@
 vim.g.mapleader = " "
 
 local map = vim.keymap
+local cmd = function(command)
+  return function()
+    vim.cmd(command)
+  end
+end
 
 map.set("i", "jk", "<ESC>", { desc = "Exit insert mode" })
 map.set("i", "kj", "<ESC>", { desc = "Exit insert mode" })
-map.set("n", "<leader>nl", ":nohl<CR>", { desc = "Clear search hightlights" })
+map.set("n", "<leader>nl", cmd("nohl"), { desc = "Clear search hightlights" })
 map.set("n", "\\", ":", { desc = "Toggle command mode" })
-map.set("n", "S", ":w<CR>", { desc = "Save buffer" })
+map.set("n", "S", cmd("w"), { desc = "Save buffer" })
 map.set("t", "jk", "<C-\\><C-n>", { desc = "Escape insert mode" })
 map.set("t", "kj", "<C-\\><C-n>", { desc = "Escape insert mode" })
 
 -- Git
-map.set("n", "<leader>gr", ":Gitsigns reset_hunk<CR>", { desc = "Revert hunk" })
+map.set("n", "<leader>gr", cmd("Gitsigns reset_hunk"), { desc = "Revert hunk" })
 
 -- Window
-map.set("n", "wj", ":res +10<CR>", { desc = "Resize window height down" })
+map.set("n", "wj", cmd("res +10"), { desc = "Resize window height down" })
 map.set("n", "<leader>j", "<C-W>-10", { desc = "Resize window height down" })
 map.set("n", "<leader>k", "<C-W>+10", { desc = "Resize window height up" })
 map.set("n", "<leader>h", "<C-W><10", { desc = "Resize window height left" })
 map.set("n", "<leader>l", "<C-W>>10", { desc = "Resize window height right" })
 
 --LSP
-map.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
-map.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
-map.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
-map.set("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
-map.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
-map.set("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
-map.set("n", "rr", "<cmd>lua vim.lsp.buf.rename()<CR>")
-map.set("n", "gf", "<cmd>lua vim.lsp.buf.format({async = true})<CR>")
-map.set("v", "gf", "<cmd>lua vim.lsp.buf.format({async = true})<CR>")
-map.set("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>")
-map.set("n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>")
-map.set("n", "gp", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
-map.set("n", "gn", "<cmd>lua vim.diagnostic.goto_next()<CR>")
-map.set("n", "tr", "<cmd>lua vim.lsp.buf.document_symbol()<CR>")
-map.set("i", "<C-Space>", "<cmd>lua vim.lsp.buf.completion()<CR>")
+map.set("n", "gd", cmd("lua vim.lsp.buf.definition()"))
+map.set("n", "gD", cmd("lua vim.lsp.buf.declaration()"))
+map.set("n", "gi", cmd("lua vim.lsp.buf.implementation()"))
+map.set("n", "gt", cmd("lua vim.lsp.buf.type_definition()"))
+map.set("n", "gr", cmd("lua vim.lsp.buf.references()"))
+map.set("n", "gs", cmd("lua vim.lsp.buf.signature_help()"))
+map.set("n", "rr", cmd("lua vim.lsp.buf.rename()"))
+map.set("n", "gf", cmd("lua vim.lsp.buf.format({async = true})"))
+map.set("v", "gf", cmd("lua vim.lsp.buf.format({async = true})"))
+map.set("n", "ga", cmd("lua vim.lsp.buf.code_action()"))
+map.set("n", "gl", cmd("lua vim.diagnostic.open_float()"))
+map.set("n", "gp", cmd("lua vim.diagnostic.goto_prev()"))
+map.set("n", "gn", cmd("lua vim.diagnostic.goto_next()"))
+map.set("n", "tr", cmd("lua vim.lsp.buf.document_symbol()"))
+map.set("i", "<C-Space>", cmd("lua vim.lsp.buf.completion()"))
+
+--Options
+map.set("n", "<leader>ao", function()
+  local opt = vim.opt
+
+  opt.relativenumber = true
+  opt.number = true
+  opt.tabstop = 2
+  opt.shiftwidth = 2
+end, { desc = "Load options" })
