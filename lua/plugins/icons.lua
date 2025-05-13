@@ -35,6 +35,11 @@ return {
             cterm_color = "66",
             name = "Properties",
           },
+          ["graphqls"] = {
+            icon = "",
+            color = "#e10098",
+            name = "GraphQLs",
+          },
           ["sh"] = {
             icon = "$",
             color = "#1E5F1E",
