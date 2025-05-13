@@ -20,7 +20,7 @@ return {
 
     cmp.setup({
       snippet = {
-        -- Exclusive to LuaSnip, check nvim-cmp documentation for usage with a different snippet engine
+        --   -- Exclusive to LuaSnip, check nvim-cmp documentation for usage with a different snippet engine
         expand = function(args)
           luasinp.lsp_expand(args.body)
         end,
@@ -30,12 +30,27 @@ return {
       },
 
       sources = {
-        { name = "nvim_lsp" },
+        {
+          name = "nvim_lsp",
+          entry_filter = function(entry)
+            return cmp.lsp.CompletionItemKind.Snippet ~= entry:get_kind()
+          end,
+        },
+        { name = "buffer" },
+        { name = "path" },
+      },
+
+      mapping = {
+        ["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+        ["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+        ["<C-l>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
+        ["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
       },
     })
 
     cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
       sources = {
+        { name = "nvim_lsp" },
         { name = "dap" },
       },
     })

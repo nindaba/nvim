@@ -5,13 +5,21 @@ return {
     { "williamboman/mason.nvim" },
     { "williamboman/mason-lspconfig.nvim" },
     { "WhoIsSethDaniel/mason-tool-installer.nvim" },
+    { "mfussenegger/nvim-jdtls" },
     --TODO: nvim-notify replace
     { "j-hui/fidget.nvim", opts = {} },
   },
   config = function()
     require("mason").setup()
     require("mason-lspconfig").setup({
-      -- Install these LSPs automatically
+      automatic_enable = {
+        "lua_ls",
+        "graphql",
+        "html",
+        "ts_ls",
+        "cssls",
+        "tailwindcss",
+      },
       ensure_installed = {
         "bashls",
         "cssls",
@@ -24,8 +32,9 @@ return {
         "lemminx",
         "marksman",
         "yamlls",
-        "angularls",
-        "denols",
+        "ts_ls",
+        "tailwindcss",
+        "graphql",
       },
     })
     require("mason-tool-installer").setup({
@@ -33,44 +42,69 @@ return {
         "java-debug-adapter",
         "java-test",
         "google-java-format",
+        "eslint_d",
+        "prettier",
+        "prettierd",
+      },
+    })
+
+    local lspconfig = require("lspconfig")
+    local cmp_nvim_lsp = require("cmp_nvim_lsp")
+    local capabilities = cmp_nvim_lsp.default_capabilities()
+
+    lspconfig.graphql.setup({
+      capabilities = capabilities,
+    })
+    -- configure html server
+    lspconfig["html"].setup({
+      capabilities = capabilities,
+    })
+    -- configure typescript server with plugin
+    lspconfig["ts_ls"].setup({
+      -- 8 gb
+      maxTsServerMemory = 8000,
+      capabilities = capabilities,
+      filetypes = {
+        "javascript",
+        "javascriptreact",
+        "javascript.jsx",
+        "typescript",
+        "typescriptreact",
+        "typescript.tsx",
+      },
+    })
+
+    lspconfig["denols"].setup({ on_attach = function(client, bufnr) end })
+
+    -- configure css server
+    lspconfig["cssls"].setup({
+      capabilities = capabilities,
+    })
+
+    -- configure tailwindcss server
+    lspconfig["tailwindcss"].setup({
+      capabilities = capabilities,
+
+      filetypes = {
+        "javascript",
+        "javascriptreact",
+        "javascript.jsx",
+        "typescript",
+        "typescriptreact",
+        "typescript.tsx",
+        "html",
+        "css",
+        "scss",
+        "less",
       },
     })
 
     vim.api.nvim_command("MasonToolsInstall")
-
-    local lspconfig = require("lspconfig")
-    local lsp_attach = function(client, bufnr) end
-
-    require("mason-lspconfig").setup_handlers({
-      function(server_name)
-        -- Don't call setup for JDTLS Java LSP because it will be setup from a separate config
-        if server_name ~= "jdtls" then
-          lspconfig[server_name].setup({
-            on_attach = lsp_attach,
-          })
-        end
-      end,
-    })
-
-    lspconfig.lua_ls.setup({
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = { "vim" },
-          },
-        },
-      },
-    })
-
-    lspconfig.dartls.setup({
-      cmd = { "dart", "language-server", "--protocol=lsp" },
-      settings = {
-        dart = {
-          completeFunctionCalls = true,
-          showTodos = true,
-        },
-      },
-    })
+    local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+    for type, icon in pairs(signs) do
+      local hl = "DiagnosticSign" .. type
+      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+    end
 
     local open_floating_preview = vim.lsp.util.open_floating_preview
     function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)

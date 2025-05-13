@@ -1,50 +1,5 @@
 return {
   "nvim-tree/nvim-tree.lua",
-  dependencies = {
-    {
-      "JMarkin/nvim-tree.lua-float-preview",
-      lazy = true,
-      -- default
-      opts = {
-        -- Whether the float preview is enabled by default. When set to false, it has to be "toggled" on.
-        toggled_on = true,
-        -- wrap nvimtree commands
-        wrap_nvimtree_commands = true,
-        -- lines for scroll
-        scroll_lines = 20,
-        -- window config
-        window = {
-          style = "minimal",
-          relative = "win",
-          border = "rounded",
-          wrap = false,
-        },
-        mapping = {
-          -- scroll down float buffer
-          down = { "<C-d>" },
-          -- scroll up float buffer
-          up = { "<C-e>", "<C-u>" },
-          -- enable/disable float windows
-          toggle = { "<C-x>" },
-        },
-        -- hooks if return false preview doesn't shown
-        hooks = {
-          pre_open = function(path)
-            -- if file > 5 MB or not text -> not preview
-            local size = require("float-preview.utils").get_size(path)
-            if type(size) ~= "number" then
-              return false
-            end
-            local is_text = require("float-preview.utils").is_text(path)
-            return size < 5 and is_text
-          end,
-          post_open = function(bufnr)
-            return true
-          end,
-        },
-      },
-    },
-  },
   config = function()
     local function binding_on_attach(bufnr)
       local api = require("nvim-tree.api")
@@ -55,8 +10,33 @@ return {
       map.set("n", "j", api.node.open.edit, opts("Open Edit"))
     end
 
+    vim.g.loaded_netrw = 1
+    vim.g.loaded_netrwPlugin = 1
+
+    -- optionally enable 24-bit colour
+    vim.opt.termguicolors = true
+
     require("nvim-tree").setup({ -- BEGIN_DEFAULT_OPTS
-      on_attach = "default",
+      on_attach = function(bufnr)
+        local api = require("nvim-tree.api")
+
+        local function opts(desc)
+          return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+        end
+
+        api.config.mappings.default_on_attach(bufnr)
+
+        -- your removals and mappings go here
+
+        vim.cmd([[
+            :hi      NvimTreeExecFile    guifg=#ffa0a0
+            :hi      NvimTreeFolderIcon    guifg=#2e3342
+            :hi      NvimTreeSpecialFile guifg=#ff80ff gui=underline
+            :hi      NvimTreeSymlink     guifg=Yellow  gui=italic
+            :hi link NvimTreeImageFile   Title
+        ]])
+        vim.cmd("NvimTreeClose")
+      end,
       hijack_cursor = false,
       auto_reload_on_write = true,
       disable_netrw = false,
@@ -82,19 +62,33 @@ return {
         number = true,
         relativenumber = true,
         signcolumn = "yes",
-        width = 60,
         float = {
-          enable = false,
+          enable = true,
           quit_on_focus_loss = true,
-          open_win_config = {
-            relative = "editor",
-            border = "rounded",
-            width = 30,
-            height = 30,
-            row = 1,
-            col = 1,
-          },
+          open_win_config = function()
+            local screen_w = vim.opt.columns:get()
+            local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
+            local window_w = screen_w * 0.45
+            local window_h = screen_h * 0.80
+            local window_w_int = math.floor(window_w)
+            local window_h_int = math.floor(window_h)
+            local center_x = (screen_w - window_w) / 2
+            local center_y = ((vim.opt.lines:get() - window_h) / 2) - vim.opt.cmdheight:get()
+
+            return {
+              border = "rounded",
+              relative = "editor",
+              row = center_y,
+              col = center_x,
+              width = window_w_int,
+              height = window_h_int,
+            }
+          end,
         },
+
+        width = function()
+          return math.floor(vim.opt.columns:get() * 0.45)
+        end,
       },
       renderer = {
         add_trailing = false,
@@ -236,7 +230,7 @@ return {
         exclude = {},
       },
       live_filter = {
-        prefix = "Filter: ",
+        prefix = "󱨿 ",
         always_show_folders = true,
       },
       filesystem_watchers = {
@@ -334,41 +328,5 @@ return {
     map.set("n", "<leader>e", function()
       vim.cmd("NvimTreeFindFileToggle")
     end, { desc = "Toggle Explore tree" })
-
-    vim.cmd([[
-        :hi      NvimTreeExecFile    guifg=#ffa0a0
-        :hi      NvimTreeFolderIcon    guifg=#2e3342
-        :hi      NvimTreeSpecialFile guifg=#ff80ff gui=underline
-        :hi      NvimTreeSymlink     guifg=Yellow  gui=italic
-        :hi link NvimTreeImageFile   Title
-    ]])
-
-    HEIGHT_PADDING = 10
-    WIDTH_PADDING = 15
-    require("float-preview").setup({
-      window = {
-        wrap = false,
-        trim_height = false,
-        open_win_config = function()
-          local screen_w = vim.opt.columns:get()
-          local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
-          local window_w_f = (screen_w - WIDTH_PADDING * 2 - 1) / 2
-          local window_w = math.floor(window_w_f)
-          local window_h = screen_h - HEIGHT_PADDING * 2
-          local center_x = window_w_f + WIDTH_PADDING + 2
-          local center_y = ((vim.opt.lines:get() - window_h) / 2) - vim.opt.cmdheight:get()
-
-          return {
-            style = "minimal",
-            relative = "editor",
-            border = "single",
-            row = center_y,
-            col = center_x,
-            width = window_w,
-            height = window_h,
-          }
-        end,
-      },
-    })
   end,
 }

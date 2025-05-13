@@ -5,6 +5,7 @@
 vim.g.mapleader = " "
 
 local map = vim.keymap
+local wk = require("which-key")
 local cmd = function(command)
   return function()
     vim.cmd(command)
@@ -15,10 +16,14 @@ map.set("i", "jk", "<ESC>", { desc = "Exit insert mode" })
 map.set("i", "kj", "<ESC>", { desc = "Exit insert mode" })
 map.set("n", "<leader>nl", cmd("nohl"), { desc = "Clear search hightlights" })
 map.set("n", "\\", ":", { desc = "Toggle command mode" })
-map.set("n", "S", cmd("w"), { desc = "Save buffer" })
+map.set("n", "S", cmd("wa"), { desc = "Save buffer" })
 map.set("t", "jk", "<C-\\><C-n>", { desc = "Escape insert mode" })
 map.set("t", "kj", "<C-\\><C-n>", { desc = "Escape insert mode" })
-
+map.set("n", "tn", cmd("terminal"), { desc = "Open terminal In new tab" })
+map.set("t", "tt", "<C-\\><C-n>q", { desc = "Escape insert mode" })
+map.set("n", "<leader>tt", function()
+  Snacks.terminal(nil, { cwd = LazyVim.root() })
+end, { desc = "Terminal (Root Dir)" })
 -- Git
 map.set("n", "<leader>gr", cmd("Gitsigns reset_hunk"), { desc = "Revert hunk" })
 
@@ -47,7 +52,7 @@ map.set("n", "tr", cmd("lua vim.lsp.buf.document_symbol()"))
 map.set("i", "<C-Space>", cmd("lua vim.lsp.buf.completion()"))
 
 --Options
-map.set("n", "<leader>ao", function()
+map.set("n", "<leader>ol", function()
   local opt = vim.opt
 
   opt.relativenumber = true
@@ -55,3 +60,7 @@ map.set("n", "<leader>ao", function()
   opt.tabstop = 2
   opt.shiftwidth = 2
 end, { desc = "Load options" })
+
+wk.add({ "<leader>o", group = "Options", icon = "󰘵" })
+
+--󰼪 AI
