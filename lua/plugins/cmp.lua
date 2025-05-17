@@ -38,6 +38,7 @@ return {
         },
         { name = "buffer" },
         { name = "path" },
+        { name = "render-markdown" },
       },
 
       mapping = {

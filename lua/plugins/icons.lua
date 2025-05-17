@@ -45,6 +45,11 @@ return {
             color = "#1E5F1E",
             name = "Sh",
           },
+          ["css"] = {
+            icon = "",
+            color = "#563d7c",
+            name = "Css",
+          },
         },
         override_by_operating_system = {
           ["apple"] = {

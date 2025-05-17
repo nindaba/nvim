@@ -46,6 +46,7 @@ require("lazy").setup({
         "tohtml",
         "tutor",
         "zipPlugin",
+        "ftplugin",
       },
     },
   },

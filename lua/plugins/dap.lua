@@ -62,6 +62,7 @@ return {
       { text = "", texthl = "yellow", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
     )
     local config = {
+      wrap = true,
       controls = {
         enabled = false,
       },
@@ -75,19 +76,19 @@ return {
           elements = {
             {
               id = "scopes",
-              size = 0.25,
-            },
-            {
-              id = "breakpoints",
-              size = 0.25,
-            },
-            {
-              id = "stacks",
-              size = 0.25,
+              size = 0.7,
             },
             {
               id = "watches",
-              size = 0.25,
+              size = 0.1,
+            },
+            {
+              id = "breakpoints",
+              size = 0.1,
+            },
+            {
+              id = "stacks",
+              size = 0.1,
             },
           },
           position = "left",
@@ -102,6 +103,7 @@ return {
             {
               id = "console",
               size = 0.75,
+              wrap = true,
             },
           },
           position = "right",
@@ -152,12 +154,19 @@ return {
     map.set("n", "<F7>", dap.step_into, { desc = " Step into" })
     map.set("n", "<F6>", dap.step_out, { desc = " Step out" })
     map.set("n", "<F9>", dap.continue, { desc = " Continue" })
+    map.set("n", "<F10>", dap.terminate, { desc = " Terminate" })
     map.set("n", "<Leader>dc", function()
       dap.set_breakpoint(vim.fn.input("Condition: "), nil, nil)
     end, { desc = "Log point" })
     map.set("n", "<Leader>dr", dap.repl.open, { desc = "Open REPL" })
     map.set({ "n", "v" }, "<Leader>dk", function()
-      dapui.eval()
+      dapui.eval(nil, {
+        enter = true,
+        max_width = 100,
+        max_height = 20,
+        title = "Inspect",
+        border = "double",
+      })
     end, { desc = "Hover variables" })
     map.set({ "n", "v" }, "<Leader>dp", function()
       widgets.preview()

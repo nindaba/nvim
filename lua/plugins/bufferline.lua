@@ -3,6 +3,35 @@ return {
   version = "*",
   dependencies = "nvim-tree/nvim-web-devicons",
   config = function()
+    local group_items = {
+      {
+        name = "  Tests",
+        highlight = { undercurl = false, sp = "green" },
+        icon = "",
+        priority = 2,
+        matcher = function(buf)
+          return buf.name:match("Test") or buf.name:match("spec")
+        end,
+      },
+      {
+        name = "󱌣 Builds",
+        highlight = { sp = "orange" },
+        priority = 3,
+        matcher = function(buf)
+          return buf.path:match("build") or buf.path:match("bin") or buf.path:match("dist")
+        end,
+      },
+      {
+        name = "  Main",
+        highlight = { sp = "#0266d9" },
+        priority = 1,
+        matcher = function(buf)
+          local isTest = buf.name:match("Test") or buf.name:match("spec")
+          local isBuild = buf.path:match("build") or buf.path:match("bin") or buf.path:match("dist")
+          return not (isTest or isBuild)
+        end,
+      },
+    }
     require("bufferline").setup({
       options = {
         custom_areas = {
@@ -52,26 +81,7 @@ return {
           options = {
             toggle_hidden_on_enter = false, -- when you re-enter a hidden group this options re-opens that group so the buffer is visible
           },
-          items = {
-            {
-              name = "  Tests",
-              highlight = { undercurl = false, sp = "green" },
-              icon = "",
-              priority = 2,
-              matcher = function(buf)
-                return buf.name:match("Test") or buf.name:match("spec")
-              end,
-            },
-            {
-              name = "  Main",
-              highlight = { sp = "#0266d9" },
-              priority = 1,
-              matcher = function(buf)
-                local isTest = buf.name:match("Test") or buf.name:match("spec")
-                return not isTest
-              end,
-            },
-          },
+          items = group_items,
         },
       },
     })

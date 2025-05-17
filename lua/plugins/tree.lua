@@ -96,7 +96,7 @@ return {
         full_name = false,
         root_folder_label = ":~:s?$?/..?",
         indent_width = 2,
-        special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
+        special_files = { "Cargo.toml", "Makefile" },
         hidden_display = "none",
         symlink_destination = true,
         decorators = { "Git", "Open", "Hidden", "Modified", "Bookmark", "Diagnostics", "Copied", "Cut" },

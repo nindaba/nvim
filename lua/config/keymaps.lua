@@ -24,8 +24,12 @@ map.set("t", "tt", "<C-\\><C-n>:hide<CR>", { desc = "Escape insert mode", norema
 map.set("n", "tt", function()
   Snacks.terminal(nil, { cwd = LazyVim.root() })
 end, { desc = "Terminal (Root Dir)", noremap = true })
+map.set("n", "f", "/", { desc = "Search" })
 -- Git
 map.set("n", "<leader>gr", cmd("Gitsigns reset_hunk"), { desc = "Revert hunk" })
+map.set("n", "<leader>wp", function()
+  vim.api.nvim_win_set_option(vim.api.nvim_get_current_win(), "wrap", true)
+end, { desc = "Current Wrap line" })
 
 -- Window
 map.set("n", "wj", cmd("res +10"), { desc = "Resize window height down" })
