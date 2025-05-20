@@ -18,11 +18,11 @@ return {
       show_stop_reason = true,
       commented = false,
       only_first_definition = false,
-      all_references = false,
+      all_references = true,
       filter_references_pattern = "",
       virt_text_pos = "eol",
       all_frames = false,
-      virt_lines = false,
+      virt_lines = true,
       virt_text_win_col = nil,
     }
 
@@ -36,10 +36,10 @@ return {
         hostName = "127.0.0.1",
       },
     }
-    vim.api.nvim_set_hl(0, "red", { fg = "#e74040" })
-    vim.api.nvim_set_hl(0, "green", { fg = "#9ece6a" })
-    vim.api.nvim_set_hl(0, "yellow", { fg = "#FFFF00" })
-    vim.api.nvim_set_hl(0, "orange", { fg = "#f09000" })
+    vim.api.nvim_set_hl(0, "red", { fg = "red" })
+    vim.api.nvim_set_hl(0, "green", { fg = "green" })
+    vim.api.nvim_set_hl(0, "yellow", { fg = "yellow" })
+    vim.api.nvim_set_hl(0, "orange", { fg = "orange" })
 
     vim.fn.sign_define(
       "DapBreakpoint",
