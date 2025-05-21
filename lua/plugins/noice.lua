@@ -9,6 +9,10 @@ return {
     local noice = require("noice")
     local noiceConfig = {
       cmdline = {
+        position = {
+          row = "90%",
+          col = "50%",
+        },
         enabled = true, -- enables the Noice cmdline UI
         view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
         opts = {}, -- global options for the cmdline. See section on views
@@ -112,7 +116,7 @@ return {
       },
       lsp = {
         progress = {
-          enabled = true,
+          enabled = false,
           -- Lsp Progress is formatted using the builtins for lsp_progress. See config.format.builtin
           -- See the section on formatting for more details on how to customize.
           --- @type NoiceFormat|string

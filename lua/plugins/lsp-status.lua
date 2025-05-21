@@ -35,7 +35,8 @@ return {
         if done then
           spinner = "✓" -- replace your check mark
         end
-        return "[" .. client_name .. "] " .. spinner .. " " .. table.concat(builder, ", ")
+        -- return "[" .. client_name .. "] " .. spinner .. " " .. table.concat(builder, ", ")
+        return spinner
       end,
     })
   end,

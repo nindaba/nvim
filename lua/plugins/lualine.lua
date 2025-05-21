@@ -68,13 +68,6 @@ return {
       end,
     }
 
-    vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
-    vim.api.nvim_create_autocmd("User", {
-      group = "lualine_augroup",
-      pattern = "LspProgressStatusUpdated",
-      callback = require("lualine").refresh,
-    })
-
     require("lualine").setup({
       options = {
         theme = bubbles_theme,
@@ -122,7 +115,11 @@ return {
           "%=", --[[ add your center components here in place of this comment ]]
         },
         lualine_x = {},
-        lualine_y = {},
+        lualine_y = {
+          function()
+            return require("lsp-progress").progress()
+          end,
+        },
         lualine_z = {
           { "progress", separator = { left = "", right = "" } },
         },
@@ -132,15 +129,18 @@ return {
         lualine_b = {},
         lualine_c = {},
         lualine_x = {},
-        lualine_y = {
-          function()
-            return require("lsp-progress").progress()
-          end,
-        },
+        lualine_y = {},
         lualine_z = { "location" },
       },
       tabline = {},
       extensions = {},
+    })
+
+    vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
+    vim.api.nvim_create_autocmd("User", {
+      group = "lualine_augroup",
+      pattern = "LspProgressStatusUpdated",
+      callback = require("lualine").refresh,
     })
   end,
 }
