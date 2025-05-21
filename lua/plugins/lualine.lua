@@ -43,7 +43,7 @@ return {
           title = false,
           groups = {},
           filter = { range = true },
-          format = " {kind_icon}{symbol.name:Normal}",
+          format = "{kind_icon}{symbol.name:Normal}",
           hl_group = "lualine_c_normal",
         })
 
@@ -68,6 +68,13 @@ return {
       end,
     }
 
+    vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
+    vim.api.nvim_create_autocmd("User", {
+      group = "lualine_augroup",
+      pattern = "LspProgressStatusUpdated",
+      callback = require("lualine").refresh,
+    })
+
     require("lualine").setup({
       options = {
         theme = bubbles_theme,
@@ -90,29 +97,28 @@ return {
         lualine_b = {
           { "branch", icon = "" },
           { "diff", symbols = { added = " ", modified = "󰝤 ", removed = " " } },
-          {
-            "filename",
-            file_status = true, -- Displays file status (readonly status, modified status)
-            newfile_status = false, -- Display new file status (new file means no write after created)
-            path = 0,
-            -- 0: Just the filename
-            -- 1: Relative path
-            -- 2: Absolute path
-            -- 3: Absolute path, with tilde as the home directory
-            -- 4: Filename and parent dir, with tilde as the home directory
-
-            shorting_target = 10, -- Shortens path to leave 40 spaces in the window
-            -- for other components. (terrible name, any suggestions?)
-            symbols = {
-              modified = " ●",
-              readonly = " ",
-              unnamed = "[No Name]",
-              newfile = "[New]",
-            },
-          },
-          breadcrumbs(),
+          -- {
+          --   "filename",
+          --   file_status = true, -- Displays file status (readonly status, modified status)
+          --   newfile_status = false, -- Display new file status (new file means no write after created)
+          --   path = 0,
+          --   -- 0: Just the filename
+          --   -- 1: Relative path
+          --   -- 2: Absolute path
+          --   -- 3: Absolute path, with tilde as the home directory
+          --   -- 4: Filename and parent dir, with tilde as the home directory
+          --
+          --   shorting_target = 10, -- Shortens path to leave 40 spaces in the window
+          --   -- for other components. (terrible name, any suggestions?)
+          --   symbols = {
+          --     modified = " ●",
+          --     readonly = " ",
+          --     unnamed = "[No Name]",
+          --   },
+          -- },
         },
         lualine_c = {
+          breadcrumbs(),
           "%=", --[[ add your center components here in place of this comment ]]
         },
         lualine_x = {},
@@ -126,7 +132,11 @@ return {
         lualine_b = {},
         lualine_c = {},
         lualine_x = {},
-        lualine_y = {},
+        lualine_y = {
+          function()
+            return require("lsp-progress").progress()
+          end,
+        },
         lualine_z = { "location" },
       },
       tabline = {},

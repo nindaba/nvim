@@ -47,6 +47,7 @@ return {
             local warning = #vim.diagnostic.get(0, { severity = seve.WARN })
             local info = #vim.diagnostic.get(0, { severity = seve.INFO })
             local hint = #vim.diagnostic.get(0, { severity = seve.HINT })
+            local readonly = vim.bo.readonly
             if error ~= 0 then
               table.insert(result, { text = "  " .. error, link = "DiagnosticError" })
             end
@@ -61,6 +62,9 @@ return {
 
             if info ~= 0 then
               table.insert(result, { text = "  " .. info, link = "DiagnosticInfo" })
+            end
+            if readonly then
+              table.insert(result, { text = "  ", link = "FileInfo" })
             end
             return result
           end,

@@ -7,7 +7,9 @@ return {
     { "WhoIsSethDaniel/mason-tool-installer.nvim" },
     { "mfussenegger/nvim-jdtls" },
     --TODO: nvim-notify replace
-    { "j-hui/fidget.nvim", opts = {} },
+    { "j-hui/fidget.nvim", enabled = false, enable = false, opts = {
+      enabled = false,
+    } },
   },
   config = function()
     require("mason").setup()
