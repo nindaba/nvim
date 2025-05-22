@@ -3,6 +3,7 @@ local conform = require("conform")
 conform.formatters_by_ft["java"] = { "google-java-format" }
 conform.formatters_by_ft["dart"] = { "dart_format" }
 conform.formatters_by_ft["graphqls"] = { "prettierd", "prettier" }
+conform.formatters_by_ft["json"] = { "prettierd", "prettier" }
 conform.formatters_by_ft["graphql"] = { "prettierd", "prettier" }
 conform.formatters_by_ft["typescript"] = { "prettierd", "prettier" }
 conform.formatters_by_ft["html"] = { "prettierd", "prettier" }

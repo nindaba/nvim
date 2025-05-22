@@ -14,12 +14,13 @@ return {
         "lua_ls",
         "graphql",
         "html",
-        -- "ts_ls",
+        "ts_ls",
         "cssls",
         "tailwindcss",
         "jdtls",
         "angularls",
-        "denols",
+        -- "denols",
+        "jsonls",
       },
       ensure_installed = {
         "bashls",
@@ -33,11 +34,11 @@ return {
         "lemminx",
         "marksman",
         "yamlls",
-        -- "ts_ls",
+        "ts_ls",
         "tailwindcss",
         "graphql",
         "angularls",
-        "denols",
+        -- "denols",
       },
     })
     require("mason-tool-installer").setup({
@@ -54,6 +55,10 @@ return {
     local lspconfig = require("lspconfig")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
     local capabilities = cmp_nvim_lsp.default_capabilities()
+
+    lspconfig["jsonls"].setup({
+      capabilities = capabilities,
+    })
 
     lspconfig["lua_ls"].setup({
       capabilities = capabilities,
@@ -72,22 +77,29 @@ return {
     })
 
     -- configure typescript server with plugin
-    -- lspconfig["ts_ls"].setup({
-    --   -- 8 gb
-    --   maxTsServerMemory = 8000,
-    --   capabilities = capabilities,
-    --   filetypes = {
-    --     "javascript",
-    --     "javascriptreact",
-    --     "javascript.jsx",
-    --     "typescript",
-    --     "typescriptreact",
-    --     "typescript.tsx",
+    lspconfig["ts_ls"].setup({
+      maxTsServerMemory = 8000,
+      capabilities = capabilities,
+      filetypes = {
+        "javascript",
+        "javascriptreact",
+        "javascript.jsx",
+        "typescript",
+        "typescriptreact",
+        "typescript.tsx",
+      },
+    })
+    --
+    -- lspconfig["denols"].setup({
+    --   settings = {
+    --     deno = {
+    --       unstable = true,
+    --       lint = true,
+    --     },
     --   },
+    --   capabilities = capabilities,
     -- })
-
-    lspconfig["denols"].setup({ on_attach = function(client, bufnr) end })
-
+    --
     -- configure css server
     lspconfig["cssls"].setup({
       capabilities = capabilities,
