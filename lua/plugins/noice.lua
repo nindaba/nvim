@@ -28,7 +28,7 @@ return {
           search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
           filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
           lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" }, icon = "", lang = "lua" },
-          help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
+          help = { pattern = "^:%s*he?l?p?%s+", icon = "󰋖" },
           input = { view = "cmdline_input", icon = "󰥻 " }, -- Used by input()
           -- lua = false, -- to disable a format, set to `false`
         },
@@ -194,14 +194,33 @@ return {
         -- you can enable a preset by setting it to true, or a table that will override the preset config
         -- you can also add custom presets that you can enable/disable with enabled=true
         bottom_search = false, -- use a classic bottom cmdline for search
-        command_palette = false, -- position the cmdline and popupmenu together
+        command_palette = preset, -- position the cmdline and popupmenu together
         long_message_to_split = false, -- long messages will be sent to a split
         inc_rename = false, -- enables an input dialog for inc-rename.nvim
         lsp_doc_border = false, -- add a border to hover docs and signature help
       },
       throttle = 1000 / 30, -- how frequently does Noice need to check for ui updates? This has no effect when in blocking mode.
       ---@type NoiceConfigViews
-      views = {}, ---@see section on views
+      views = {
+        cmdline_popup = {
+          position = {
+            row = "20%", -- Set to 1 for top of the screen
+            col = 1,
+          },
+          border = {
+            style = "none",
+            padding = { 1, 1 },
+          },
+          filter_options = {},
+          win_options = {
+            winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+          },
+          size = {
+            width = "100%",
+            height = "auto",
+          },
+        },
+      },
       ---@type NoiceRouteConfig[]
       routes = {}, --- @see section on routes
       ---@type table<string, NoiceFilter>

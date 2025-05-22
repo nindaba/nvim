@@ -13,6 +13,7 @@ return {
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",
+    "onsails/lspkind.nvim", -- vs-code like pictograms
   },
   config = function()
     local cmp = require("cmp")
@@ -47,6 +48,12 @@ return {
         ["<C-l>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
         ["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
       },
+      formatting = {
+        format = require("lspkind").cmp_format({
+          maxwidth = 80,
+          mode = "symbol_text",
+        }),
+      },
     })
 
     cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
@@ -55,5 +62,104 @@ return {
         { name = "dap" },
       },
     })
+
+    local cmdlineMappings = cmp.mapping.preset.cmdline({
+      ["<C-k>"] = {
+        c = function()
+          if cmp.visible() then
+            cmp.select_prev_item()
+          else
+            cmp.complete()
+          end
+        end,
+      },
+      ["<C-j>"] = {
+        c = function()
+          if cmp.visible() then
+            cmp.select_next_item()
+          else
+            cmp.complete()
+          end
+        end,
+      },
+      ["<C-l>"] = {
+        c = function()
+          cmp.confirm()
+        end,
+      },
+      ["<Tab>"] = {
+        c = function() end,
+      },
+      ["kj"] = {
+        c = function()
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-c>", true, true, true), "n", true)
+        end,
+      },
+      ["jk"] = {
+        c = function()
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-c>", true, true, true), "n", true)
+        end,
+      },
+      [" "] = {
+        c = function()
+          cmp.confirm()
+          vim.api.nvim_feedkeys(" ", "n", true)
+        end,
+      },
+      ["<CR>"] = {
+        c = function()
+          cmp.confirm()
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, true, true), "n", true)
+        end,
+      },
+    })
+
+    cmp.setup.cmdline("/", {
+      mapping = cmdlineMappings,
+      sources = {
+        { name = "buffer" },
+      },
+    })
+
+    cmp.setup.cmdline(":", {
+      mapping = cmdlineMappings,
+      sources = cmp.config.sources({
+        { name = "path" },
+      }, {
+        {
+          name = "cmdline",
+          option = {
+            ignore_cmds = { "Man", "!" },
+          },
+        },
+      }),
+    })
+    vim.api.nvim_set_hl(0, "CmpItemKindMatch", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindMatchFuzzy", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindText", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindMethod", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindFunction", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindConstructor", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindField", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindVariable", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindClass", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindInterface", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindModule", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindProperty", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindUnit", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindValue", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindEnum", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindSnippet", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindColor", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindFile", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindReference", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindFolder", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindEnumMember", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindConstant", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindStruct", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindEvent", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindOperator", { fg = "none", bg = "none" })
+    vim.api.nvim_set_hl(0, "CmpItemKindTypeParameter", { fg = "none", bg = "none" })
   end,
 }

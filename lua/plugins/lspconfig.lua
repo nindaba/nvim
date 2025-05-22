@@ -14,10 +14,12 @@ return {
         "lua_ls",
         "graphql",
         "html",
-        "ts_ls",
+        -- "ts_ls",
         "cssls",
         "tailwindcss",
         "jdtls",
+        "angularls",
+        "denols",
       },
       ensure_installed = {
         "bashls",
@@ -31,9 +33,11 @@ return {
         "lemminx",
         "marksman",
         "yamlls",
-        "ts_ls",
+        -- "ts_ls",
         "tailwindcss",
         "graphql",
+        "angularls",
+        "denols",
       },
     })
     require("mason-tool-installer").setup({
@@ -51,27 +55,36 @@ return {
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
-    lspconfig.graphql.setup({
+    lspconfig["lua_ls"].setup({
+      capabilities = capabilities,
+    })
+
+    lspconfig["graphql"].setup({
       capabilities = capabilities,
     })
     -- configure html server
     lspconfig["html"].setup({
       capabilities = capabilities,
     })
-    -- configure typescript server with plugin
-    lspconfig["ts_ls"].setup({
-      -- 8 gb
-      maxTsServerMemory = 8000,
+
+    lspconfig["angularls"].setup({
       capabilities = capabilities,
-      filetypes = {
-        "javascript",
-        "javascriptreact",
-        "javascript.jsx",
-        "typescript",
-        "typescriptreact",
-        "typescript.tsx",
-      },
     })
+
+    -- configure typescript server with plugin
+    -- lspconfig["ts_ls"].setup({
+    --   -- 8 gb
+    --   maxTsServerMemory = 8000,
+    --   capabilities = capabilities,
+    --   filetypes = {
+    --     "javascript",
+    --     "javascriptreact",
+    --     "javascript.jsx",
+    --     "typescript",
+    --     "typescriptreact",
+    --     "typescript.tsx",
+    --   },
+    -- })
 
     lspconfig["denols"].setup({ on_attach = function(client, bufnr) end })
 
