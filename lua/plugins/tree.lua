@@ -27,15 +27,13 @@ return {
         api.config.mappings.default_on_attach(bufnr)
 
         -- your removals and mappings go here
-        if vim.coloscheme == "oxocarbon" then
-          vim.cmd([[
+        vim.cmd([[
             :hi      NvimTreeExecFile    guifg=#ffa0a0
             :hi      NvimTreeFolderIcon    guifg=#2e3342
             :hi      NvimTreeSpecialFile guifg=#ff80ff gui=underline
             :hi      NvimTreeSymlink     guifg=Yellow  gui=italic
             :hi link NvimTreeImageFile   Title
         ]])
-        end
         vim.cmd("NvimTreeClose")
       end,
       hijack_cursor = false,
