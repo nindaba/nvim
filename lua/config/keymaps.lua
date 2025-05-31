@@ -26,7 +26,7 @@ map.set("t", "tt", "<C-\\><C-n>:hide<CR>", { desc = "Escape insert mode", norema
 map.set("n", "tt", function()
   Snacks.terminal(nil, { cwd = LazyVim.root() })
 end, { desc = "Terminal (Root Dir)", noremap = true })
-map.set("n", "f", "/", { desc = "Search" })
+map.set("n", "ff", "/", { desc = "Search" })
 -- Git
 map.set("n", "<leader>gr", cmd("Gitsigns reset_hunk"), { desc = "Revert hunk" })
 map.set("n", "<leader>wp", function()

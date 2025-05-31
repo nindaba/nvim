@@ -100,18 +100,18 @@ return {
           vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-c>", true, true, true), "n", true)
         end,
       },
-      [" "] = {
-        c = function()
-          cmp.confirm()
-          vim.api.nvim_feedkeys(" ", "n", true)
-        end,
-      },
-      ["<CR>"] = {
-        c = function()
-          cmp.confirm()
-          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, true, true), "n", true)
-        end,
-      },
+      -- [" "] = {
+      --   c = function()
+      --     cmp.confirm()
+      --     vim.api.nvim_feedkeys(" ", "n", true)
+      --   end,
+      -- },
+      -- ["<CR>"] = {
+      --   c = function()
+      --     cmp.confirm()
+      --     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, true, true), "n", true)
+      --   end,
+      -- },
     })
 
     cmp.setup.cmdline("/", {
