@@ -92,6 +92,7 @@ return {
       },
     })
     --
+    -- Denos for typescript
     -- lspconfig["denols"].setup({
     --   settings = {
     --     deno = {
