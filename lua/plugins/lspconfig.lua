@@ -21,7 +21,6 @@ return {
         "angularls",
         -- "denols",
         "jsonls",
-        "rust-analyzer",
       },
       ensure_installed = {
         "bashls",
@@ -40,7 +39,6 @@ return {
         "graphql",
         "angularls",
         -- "denols",
-        "rust-analyzer",
       },
     })
     require("mason-tool-installer").setup({
@@ -105,10 +103,6 @@ return {
     --
     -- configure css server
     lspconfig["cssls"].setup({
-      capabilities = capabilities,
-    })
-
-    lspconfig["rust-analyzer"].setup({
       capabilities = capabilities,
     })
 
