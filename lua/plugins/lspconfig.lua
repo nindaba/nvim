@@ -17,7 +17,6 @@ return {
         "ts_ls",
         "cssls",
         "tailwindcss",
-        "jdtls",
         "angularls",
         -- "denols",
         "jsonls",
@@ -124,6 +123,20 @@ return {
       },
     })
 
+    local java_debug_path = vim.fn.glob(
+      vim.fn.stdpath("data") .. "/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar"
+    )
+    local java_test_paths = vim.split(
+      vim.fn.glob(vim.fn.stdpath("data") .. "/mason/packages/java-test/extension/server/*.jar"),
+      "\n"
+    )
+
+    local bundles = {}
+    if java_debug_path ~= "" then
+      table.insert(bundles, java_debug_path)
+    end
+    vim.list_extend(bundles, java_test_paths)
+
     lspconfig["jdtls"].setup({
       root_dir = vim.fs.root(0, { "settings.gradle", ".git", "pom.xml" }),
 
@@ -131,7 +144,7 @@ return {
         bundles = bundles,
       },
 
-      capabilities = require("cmp_nvim_lsp").default_capabilities(),
+      capabilities = capabilities,
 
       settings = {
         java = {
@@ -144,35 +157,15 @@ return {
       },
 
       on_attach = function()
-        local map = vim.keymap
-
         require("jdtls").setup_dap({ hotcodereplace = "auto" })
         require("jdtls.dap").setup_dap_main_class_configs()
 
-        map.set("n", "<leader>tt", function()
+        vim.keymap.set("n", "<leader>tt", function()
           vim.cmd(":wa")
           require("jdtls").test_nearest_method()
         end, { desc = "Test method" })
 
-        require("jdtls").setup_dap({ hotcodereplace = "auto" })
-        require("jdtls.dap").setup_dap_main_class_configs()
-
-        map.set("n", "<leader>tt", function()
-          vim.cmd(":wa")
-          require("jdtls").test_nearest_method()
-        end, { desc = "Test method" })
-
-        map.set("n", "<leader>ta", function()
-          vim.cmd(":wa")
-          require("jdtls").test_class()
-        end, { desc = "Test all" })
-
-        map.set("n", "<leader>tt", function()
-          vim.cmd(":wa")
-          require("jdtls").test_nearest_method()
-        end, { desc = "Test method" })
-
-        map.set("n", "<leader>ta", function()
+        vim.keymap.set("n", "<leader>ta", function()
           vim.cmd(":wa")
           require("jdtls").test_class()
         end, { desc = "Test all" })

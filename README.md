@@ -1,4 +1,4 @@
-# Jet settup
+# Jet setup
 
 ## Java settup source
 
